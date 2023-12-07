@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:st_curier_bd/src/component/colors/colors.dart';
 import 'package:st_curier_bd/src/screens/home_screen.dart';
+import 'package:st_curier_bd/src/services/auth/loginScreen.dart';
+import 'package:st_curier_bd/src/services/auth/otp_screen.dart';
+import 'package:st_curier_bd/src/services/auth/registrationScreen.dart';
+import 'package:st_curier_bd/src/widgets/custom_gridview.dart';
 
 class App extends StatelessWidget {
   App({super.key});
@@ -15,39 +19,15 @@ class App extends StatelessWidget {
           headline6: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
           bodyText2: TextStyle(fontSize: 16.0),
         ),
-      )
-      // theme: ThemeData(
-      //   useMaterial3: true,
-      //   appBarTheme: ,
-      //   backgroundColor: ,
-
-      //   // Define the default brightness and colors.
-      //   colorScheme: ColorScheme.fromSeed(
-      //     seedColor: whiteColor,
-      //     brightness: Brightness.light,
-      //   ),
-
-      //   // Define the default `TextTheme`. Use this to specify the default
-      //   // text styling for headlines, titles, bodies of text, and more.
-      //   textTheme: TextTheme(
-      //     displayLarge: const TextStyle(
-      //       fontSize: 72,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //     titleLarge: GoogleFonts.oswald(
-      //       fontSize: 30,
-      //     ),
-      //     bodyMedium: GoogleFonts.merriweather(),
-      //     displaySmall: GoogleFonts.pacifico(),
-      //   ),
-      // ),
-      ,
+      ),
       debugShowCheckedModeBanner: false,
       getPages: [
         //GetPage(name: "/", page: () => SplashScreen()),
-        GetPage(name: "/", page: () => HomeScreen())
+        GetPage(name: "/", page: () => HomeScreen()),
+        GetPage(name: "/registrationScreen", page: () => RegistrationScreen()),
+        //GetPage(name: "/", page: () => LoginScreen())
       ],
-      //home: HomeScreen(),
+      // home: CustomGridView(),
     );
   }
 }

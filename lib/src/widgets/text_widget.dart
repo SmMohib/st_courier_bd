@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class TextWidget extends StatelessWidget {
   TextWidget({
     Key? key,
     required this.text,
-     this.color,
+    this.color,
     required this.textSize,
     this.isTitle = false,
     this.maxLines = 10,
   }) : super(key: key);
   final String text;
-  final Color ?color;
+  final Color? color;
   final double textSize;
   bool isTitle;
   int maxLines = 10;
@@ -20,8 +21,8 @@ class TextWidget extends StatelessWidget {
     return Text(
       text,
       maxLines: maxLines,
-      style: TextStyle(
-          overflow: TextOverflow.ellipsis,
+      style: GoogleFonts.heebo(
+          // overflow: TextOverflow.ellipsis,
           color: color,
           fontSize: textSize,
           fontWeight: isTitle ? FontWeight.bold : FontWeight.normal),
