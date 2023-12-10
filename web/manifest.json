@@ -1,6 +1,6 @@
 {
-    "name": "st_curier_bd",
-    "short_name": "st_curier_bd",
+    "name": "st_courier_bd",
+    "short_name": "st_courier_bd",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

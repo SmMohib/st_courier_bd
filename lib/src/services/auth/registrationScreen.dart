@@ -2,14 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:st_curier_bd/src/component/colors/colors.dart';
-import 'package:st_curier_bd/src/services/auth/forget_password.dart';
-import 'package:st_curier_bd/src/services/auth/loginScreen.dart';
-import 'package:st_curier_bd/src/widgets/custom_button.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/textfill_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
+import 'package:st_courier_bd/src/component/colors/colors.dart';
+import 'package:st_courier_bd/src/services/auth/forget_password.dart';
+import 'package:st_courier_bd/src/services/auth/loginScreen.dart';
+import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
+import 'package:st_courier_bd/src/widgets/textfill_widget.dart';
+import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 import 'package:get/get.dart';
+
+import '../../component/font/font_style.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -19,16 +21,32 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _emailTextController = TextEditingController();
+  final _companyNameTextController = TextEditingController();
+  final _yourNameTextController = TextEditingController();
+  final _addressTextController = TextEditingController();
+  final _websiteTextController = TextEditingController();
+  final _numberTextController = TextEditingController();
   final _passTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _pass2TextController = TextEditingController();
+
   final _passFocusNode = FocusNode();
+  final _pass2FocusNode = FocusNode();
   final _formKey = GlobalKey<FormState>();
   var _obscureText = true;
+  var _obscureText2 = true;
   @override
   void dispose() {
+    _companyNameTextController.dispose();
+    _yourNameTextController.dispose();
+    _addressTextController.dispose();
+    _websiteTextController.dispose();
+    _numberTextController.dispose();
+    _pass2TextController.dispose();
     _emailTextController.dispose();
     _passTextController.dispose();
     _passFocusNode.dispose();
+    _pass2FocusNode.dispose();
     super.dispose();
   }
 
@@ -45,10 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               Container(
                 height: mediaQuery.height * 0.3,
                 width: mediaQuery.height * 0.3,
-                child: const Image(
-                    image: CachedNetworkImageProvider(
-                  'https://stcourier.stitbd.app/public/uploads/application/1692693950YRInjW3J1USkdT976599.jpg',
-                )),
+                child: Image.asset('assets/images/logo.png'),
               ),
               TextWidget(
                 text: 'Create Account',
@@ -62,187 +77,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Column(
                       children: [
                         ///Company Name
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
-                            fillColor: primaryColor,
-                            labelText: 'Company Name',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Company Name',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        textfill(_companyNameTextController, "Company Name",
+                            'Company Name'),
 
                         ///name
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            } else {
-                              return null;
-                            }
-                          },
-                          style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
-                            fillColor: primaryColor,
-                            labelText: 'Your Name',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Your Name',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        textfill(
+                            _yourNameTextController, "Your Name", 'Your Name'),
 
                         ///address
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            } else {
-                              return null;
-                            }
-                          },
-                          style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
-                            fillColor: primaryColor,
-                            labelText: 'Enter Address',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Enter Address',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        textfill(_addressTextController, "Enter Address",
+                            'Enter Address'),
 
                         ///url link
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            } else {
-                              return null;
-                            }
-                          },
-                          style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
-                            fillColor: primaryColor,
-                            labelText: 'Website Url Link',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Website Url Link',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        textfill(_websiteTextController, "Website Link",
+                            'Website Link'),
 
                         ///Contact Number
-                        TextFormField(
-                          textInputAction: TextInputAction.next,
-                          onEditingComplete: () => FocusScope.of(context)
-                              .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
-                            } else {
-                              return null;
-                            }
-                          },
-                          style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
-                            fillColor: primaryColor,
-                            labelText: 'Contact Number',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: primaryColor),
-                                borderRadius: BorderRadius.circular(10)),
-                            hintText: 'Contact Number',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(color: primaryColor),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        textfill(_numberTextController, "Contact Number",
+                            'Contact Number'),
 
                         ///email
                         TextFormField(
@@ -282,6 +134,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height: 20,
                         ),
 //password
+
                         TextFormField(
                           textInputAction: TextInputAction.done,
                           onEditingComplete: () {
@@ -307,7 +160,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                 borderRadius: BorderRadius.circular(10)),
                             labelStyle: TextStyle(color: primaryColor),
                             focusColor: primaryColor,
-                            suffixIcon: GestureDetector(
+                            suffixIcon: InkWell(
                                 onTap: () {
                                   setState(() {
                                     _obscureText = !_obscureText;
@@ -338,8 +191,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           onEditingComplete: () {
                             //   _submitFormOnLogin();
                           },
-                          controller: _passTextController,
-                          focusNode: _passFocusNode,
+                          controller: _pass2TextController,
+                          focusNode: _pass2FocusNode,
                           obscureText: _obscureText,
                           keyboardType: TextInputType.visiblePassword,
                           validator: (value) {
@@ -404,18 +257,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'You Have An Account.',
-                      style: GoogleFonts.abel(),
-                    ),
+                    textPoppins(
+                        text: 'You Have An Account.',
+                        color: blackColor,
+                        isTile: false,
+                        fontSize: 14),
                     TextButton(
-                        onPressed: () {
-                          Get.to(LoginScreen());
-                        },
-                        child: Text(
-                          'Login Account?',
-                          style: GoogleFonts.abel(),
-                        ))
+                      onPressed: () {
+                        Get.to(LoginScreen());
+                      },
+                      child: textPoppins(
+                          text: 'Login Account?',
+                          color: primaryColor,
+                          isTile: false,
+                          fontSize: 13),
+                    )
                   ],
                 ),
               ),
@@ -430,4 +286,67 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
   }
+
+  /// Text Filled
+  textfill(TextEditingController controller, String label, String hint) {
+    return Column(
+      children: [
+        TextFormField(
+          controller: controller,
+          textInputAction: TextInputAction.next,
+          onEditingComplete: () =>
+              FocusScope.of(context).requestFocus(_passFocusNode),
+          // controller: _emailTextController,
+          keyboardType: TextInputType.emailAddress,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+          style: const TextStyle(color: primaryColor),
+          decoration: InputDecoration(
+            fillColor: primaryColor,
+            labelText: label,
+
+            labelStyle: const TextStyle(color: primaryColor, fontSize: 16),
+            border: const OutlineInputBorder(
+              borderSide: BorderSide(color: primaryColor),
+            ),
+            //counterText: 'Text',
+            hintMaxLines: 5,
+            hintText: hint,
+            //eye icon
+
+            hintStyle: const TextStyle(
+                color: Color.fromARGB(255, 115, 114, 114), fontSize: 16),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: primaryColor),
+            ),
+            focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: primaryColor),
+            ),
+          ),
+        ),
+        const VerticalSpacing(20),
+      ],
+    );
+  }
 }
+
+
+    //  validator: (value) {
+    //                         if (value!.isEmpty || value.length < 7) {
+    //                           return 'Please enter a valid password';
+    //                         } else {
+    //                           return null;
+    //                         }
+    //                       },
+
+    //  validator: (value) {
+    //                         if (value!.isEmpty || !value.contains('@')) {
+    //                           return 'Please enter a valid email address';
+    //                         } else {
+    //                           return null;
+    //                         }
+    //                       },

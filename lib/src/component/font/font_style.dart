@@ -1,35 +1,33 @@
-import 'dart:ui';
+
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-text16() {
-  return TextStyle(
-    fontSize: 16,
-    color: Color.fromARGB(192, 5, 5, 5),
-    fontWeight: FontWeight.w400,
+textPoppins({required String text,
+required Color color ,
+required bool isTile,
+ required double fontSize}) {
+  return Text(
+    text,
+    
+    style: GoogleFonts.poppins(
+      fontSize: fontSize,
+      color:color,
+      fontWeight: isTile ? FontWeight.bold : FontWeight.normal
+    ),
   );
 }
-
-text15() {
-  return TextStyle(
-    fontSize: 15,
-    color: Colors.black54,
-    fontWeight: FontWeight.w400,
-  );
-}
-
-text20() {
-  return TextStyle(
-    fontSize: 20,
-    color: Color.fromARGB(207, 0, 0, 0),
-    fontWeight: FontWeight.w400,
-  );
-}
-
-text24() {
-  return TextStyle(
-    fontSize: 24,
-    color: Color.fromARGB(172, 0, 0, 0),
-    fontWeight: FontWeight.w400,
+textRoboro({required String text,
+required Color color ,
+required bool isTile,
+ required double fontSize}) {
+  return Text(
+    text,
+    
+    style: GoogleFonts.roboto(
+      fontSize: fontSize,
+      color:color,
+      fontWeight: isTile ? FontWeight.bold : FontWeight.normal
+    ),
   );
 }

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
-
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
+import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 import '../controller/get_controller.dart';
 
+// ignore: must_be_immutable
 class SplashScreen extends StatelessWidget {
   SplashScreen({Key? key}) : super(key: key);
-  String? logo =
-      'https://stcourier.stitbd.app/public/uploads/application/1692693950YRInjW3J1USkdT976599.jpg';
+  String? logo = 'assets/images/logo.png';
   @override
   Widget build(BuildContext context) {
     SplashScreenViewModel splashScreenViewModel =
@@ -26,14 +25,14 @@ class SplashScreen extends StatelessWidget {
               children: <Widget>[
                 Container(
                   height: mediaQuery.height * .1,
-                  child: Image.network(
+                  child: Image.asset(
                     logo.toString(),
                   ),
                 ),
                 Container(
                   height: mediaQuery.height * 0.6,
-                  child: Image.network(
-                    'https://images.assetsdelivery.com/compings_v2/distrologo/distrologo1902/distrologo190200658.jpg',
+                  child: Image.asset(
+                    'assets/images/pickup.png',
                     //  width: splashScreenViewModel.animation.value * 20,
                     // height: splashScreenViewModel.animation.value * 20,
                   ),

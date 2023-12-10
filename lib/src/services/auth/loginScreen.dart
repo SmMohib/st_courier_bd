@@ -3,14 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:st_curier_bd/src/component/colors/colors.dart';
-import 'package:st_curier_bd/src/screens/home_screen.dart';
-import 'package:st_curier_bd/src/services/auth/forget_password.dart';
-import 'package:st_curier_bd/src/services/auth/registrationScreen.dart';
-import 'package:st_curier_bd/src/widgets/custom_button.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/textfill_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
+import 'package:st_courier_bd/src/component/colors/colors.dart';
+import 'package:st_courier_bd/src/component/font/font_style.dart';
+import 'package:st_courier_bd/src/screens/home_screen.dart';
+import 'package:st_courier_bd/src/services/auth/forget_password.dart';
+import 'package:st_courier_bd/src/services/auth/registrationScreen.dart';
+import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
+import 'package:st_courier_bd/src/widgets/textfill_widget.dart';
+import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -46,10 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: mediaQuery.height * 0.3,
                 width: mediaQuery.height * 0.3,
-                child: const Image(
-                    image: CachedNetworkImageProvider(
-                  'https://stcourier.stitbd.app/public/uploads/application/1692693950YRInjW3J1USkdT976599.jpg',
-                )),
+                child: Image.asset('assets/images/logo.png'),
               ),
               TextWidget(
                 text: 'Login',
@@ -77,20 +75,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                           },
                           style: const TextStyle(color: primaryColor),
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             fillColor: primaryColor,
                             labelText: 'Email',
                             labelStyle: TextStyle(color: primaryColor),
                             border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: primaryColor),
-                            ),
-                            hintText: 'Email',
-                            hintStyle: const TextStyle(
-                                color: Color.fromARGB(255, 115, 114, 114)),
-                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(color: primaryColor),
                             ),
-                            focusedBorder: const OutlineInputBorder(
+                            hintText: 'Email',
+                            hintStyle: TextStyle(
+                                color: Color.fromARGB(255, 115, 114, 114)),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
+                            ),
+                            focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: primaryColor),
                             ),
                           ),
@@ -109,18 +107,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: _obscureText,
                           keyboardType: TextInputType.visiblePassword,
                           validator: (value) {
-                            if (value!.isEmpty || value.length < 7) {
+                            if (value!.isEmpty || value.length < 1) {
                               return 'Please enter a valid password';
                             } else {
                               return null;
                             }
                           },
-                          style: TextStyle(color: primaryColor),
+                          style: const TextStyle(color: primaryColor),
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle: TextStyle(color: primaryColor),
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: primaryColor),
+                            labelStyle: const TextStyle(color: primaryColor),
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(color: primaryColor),
                             ),
                             focusColor: primaryColor,
                             suffixIcon: GestureDetector(
@@ -170,26 +168,29 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'You Have No Account.',
-                      style: GoogleFonts.abel(),
-                    ),
+                    textPoppins(
+                        text: 'You Have No Account.',
+                        color: blackColor,
+                        isTile: false,
+                        fontSize: 14),
                     TextButton(
-                        onPressed: () {
-                          Get.to(RegistrationScreen());
-                        },
-                        child: Text(
-                          'Create Account?',
-                          style: GoogleFonts.abel(),
-                        ))
+                      onPressed: () {
+                        Get.to(const RegistrationScreen());
+                      },
+                      child: textPoppins(
+                          text: 'Create Account?',
+                          color: primaryColor,
+                          isTile: false,
+                          fontSize: 13),
+                    ),
                   ],
                 ),
               ),
               TextButton(
                   onPressed: () {
-                    Get.to(ForgetScreen());
+                    Get.to(const ForgetScreen());
                   },
-                  child: Text('Forget Account?'))
+                  child: const Text('Forget Account?'))
             ],
           ),
         ),

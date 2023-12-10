@@ -1,11 +1,27 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:st_curier_bd/src/component/colors/colors.dart';
-import 'package:st_curier_bd/src/widgets/custom_button.dart';
-import 'package:st_curier_bd/src/widgets/main_drawar.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:st_courier_bd/src/component/colors/colors.dart';
+import 'package:st_courier_bd/src/component/font/font_style.dart';
+import 'package:st_courier_bd/src/screens/Payment_Complete.dart';
+import 'package:st_courier_bd/src/screens/cancelParcel.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/add_parcel.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/payment_list.dart';
+import 'package:st_courier_bd/src/screens/pending_delivery.dart';
+import 'package:st_courier_bd/src/screens/pending_pickup.dart';
+import 'package:st_courier_bd/src/screens/profile/profile_screen.dart';
+import 'package:st_courier_bd/src/screens/return_complete.dart';
+import 'package:st_courier_bd/src/screens/return_parcel.dart';
+import 'package:st_courier_bd/src/screens/total_parcel.dart';
+import 'package:st_courier_bd/src/shimmer_screen.dart';
+import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
+import 'package:st_courier_bd/src/widgets/main_drawar.dart';
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
+import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -17,11 +33,62 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Model? model;
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-    return SafeArea(
+    Future<bool> showExitPopup(context) async {
+      return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Container(
+                height: 100,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    textPoppins(
+                        text: 'Do you want to exit?',
+                        color: primaryColor,
+                        isTile: false,
+                        fontSize: 20),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              print('yes selected');
+                              exit(0);
+                            },
+                            child: const Text("Yes"),
+                            style:
+                                ElevatedButton.styleFrom(primary: primaryColor),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                            child: ElevatedButton(
+                          onPressed: () {
+                            print('no selected');
+                            Navigator.of(context).pop();
+                          },
+                          child:
+                              Text("No", style: TextStyle(color: Colors.black)),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                          ),
+                        ))
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            );
+          });
+    }
+
+    return WillPopScope(
+      onWillPop: () => showExitPopup(context),
       child: Scaffold(
         backgroundColor: backgroundColor,
         appBar: AppBar(
@@ -43,44 +110,52 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const CircleAvatar(
                           radius: 30,
-                          backgroundImage: CachedNetworkImageProvider(
-                              'https://avatars.githubusercontent.com/u/79123931?v=4'),
+                          backgroundImage:
+                              AssetImage('assets/images/profilepic.png'),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Hanif',
-                              style: GoogleFonts.roboto(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            TextWidget(
-                              text: 'Balance: \৳150',
-                              textSize: 16,
-                            ),
-                            TextWidget(
-                              text: '0156896843',
-                              textSize: 17,
-                            ),
+                            textPoppins(
+                                text: 'Mohibbullah',
+                                color: primaryColor,
+                                isTile: true,
+                                fontSize: 16),
+                            textPoppins(
+                                text: 'Balance: \৳150',
+                                color: blackColor,
+                                isTile: false,
+                                fontSize: 14),
+                            textPoppins(
+                                text: '0156896843',
+                                color: blackColor,
+                                isTile: false,
+                                fontSize: 14),
                           ],
                         ),
                         CustomButton(
-                            fct: () {},
+                            fct: () {
+                              Get.to(ProfileScreen());
+                            },
                             text: 'VIEW PROFILE',
                             color: primaryColor)
                       ],
                     ),
-                    const VerticalSpacing(20),
+                    const VerticalSpacing(14),
                     Center(
-                      child: TextWidget(
-                        text: 'Welcome To ST Courier',
-                        textSize: 20,
-                        isTitle: true,
-                      ),
+                      child: textPoppins(
+                          text: 'Welcome To ST Courier',
+                          color: primaryColor,
+                          isTile: false,
+                          fontSize: 19),
                     ),
                     const VerticalSpacing(10),
                     CustomButton(
-                        fct: () {}, text: 'ADD PARCEL', color: primaryColor),
+                        fct: () {
+                          Get.to(AddParcelScreen());
+                        },
+                        text: 'ADD PARCEL',
+                        color: primaryColor),
                     const VerticalSpacing(20),
                   ],
                 ),
@@ -92,21 +167,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdm3pVBm5kr6Fdqen_7uZD5duuK_8KHAqQfg&usqp=CAU',
+                            ontap: () {
+                              Get.to(TotalParcel(),
+                                  transition: Transition.circularReveal);
+                            },
+                            img: 'assets/images/totalpearcel.png',
                             title: '  Total \n Parcel',
                             amount: '35'),
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://static.vecteezy.com/system/resources/previews/013/661/246/non_2x/cancellation-wrong-delivery-glyph-pictogram-cancel-parcel-box-order-icon-reject-purchase-in-cardboard-box-delete-package-silhouette-black-icon-remove-product-pack-isolated-illustration-vector.jpg',
-                            title: ' Cancel \n Parcel',
+                            ontap: () {
+                              Get.to(CancelParcel(),
+                                  transition: Transition.circularReveal);
+                            },
+                            img: 'assets/images/cancelled.png',
+                            title: ' Cancel \n  Parcel',
                             amount: '3'),
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://w7.pngwing.com/pngs/645/268/png-transparent-logistics-computer-icons-transport-logistic-warehouse-miscellaneous-angle-cargo-thumbnail.png',
+                            ontap: () {
+                              Get.to(PendingPickupScreen());
+                            },
+                            img: 'assets/images/waitingpickup.png',
                             title: 'Pending in\n   Pickup',
                             amount: '34'),
                       ],
@@ -116,21 +196,22 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://static.thenounproject.com/png/1933935-200.png',
+                            ontap: () {
+                              Get.to(PendingDeliveryScreen());
+                            },
+                            img: 'assets/images/waitingdelivery.png',
                             title: ' Panding \n Delivery',
                             amount: '35'),
                         serviceButton(
                             ontap: () {},
-                            img:
-                                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4snHfD6APcwZw2icZXFP07jHn9nQTX0cYE83YUOlUtfTQ01urKT1il1eRJ4KwsBL0E4Q&usqp=CAU',
+                            img: 'assets/images/deliverycomplete.png',
                             title: '  Delivery \n Complete',
                             amount: '34'),
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://w7.pngwing.com/pngs/74/916/png-transparent-computer-icons-money-payment-coin-coin-payment-logo-bank-thumbnail.png',
+                            ontap: () {
+                              Get.to(PaymentCompleteScreen());
+                            },
+                            img: 'assets/images/paymentcomplete.png',
                             title: ' Payment \nComplete',
                             amount: '44'),
                       ],
@@ -140,22 +221,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://w7.pngwing.com/pngs/652/411/png-transparent-product-return-policy-money-back-guarantee-computer-icons-return-angle-retail-rectangle-thumbnail.png',
+                            ontap: () {
+                              Get.to(ReturnParcelScreen());
+                            },
+                            img: 'assets/images/returnparcel.png',
                             title: '  Return \n  Parcel',
                             amount: '5'),
                         serviceButton(
-                            ontap: () {},
-                            img:
-                                'https://w7.pngwing.com/pngs/869/958/png-transparent-iphone-6-computer-icons-completion-angle-text-triangle-thumbnail.png',
+                            ontap: () {
+                              Get.to(ReturnCompleteScreen());
+                            },
+                            img: 'assets/images/returncomplete.png',
                             title: '  Return \nComplete',
                             amount: '45'),
                         serviceButton(
                             ontap: () {},
-                            img:
-                                'https://w7.pngwing.com/pngs/673/188/png-transparent-recycling-symbol-logo-waste-others-miscellaneous-angle-text-thumbnail.png',
-                            title: ' Return In\n Progress',
+                            img: 'assets/images/pendingamout.png',
+                            title: ' Payment In\n Progress',
                             amount: '35'),
                       ],
                     )
@@ -167,13 +249,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     totalButton(
-                        img:
-                            'https://w7.pngwing.com/pngs/933/104/png-transparent-payment-computer-icons-money-credit-card-indian-rupee-sign-web-production-angle-text-hand-thumbnail.png',
+                        ontap: () {},
+                        img: 'assets/images/totalamount1.png',
                         title: 'Total Collect Amount',
                         amount: '12,990'),
                     totalButton(
-                        img:
-                            'https://w7.pngwing.com/pngs/418/178/png-transparent-payment-gateway-credit-card-computer-icons-point-of-sale-automotive-industry-business-card-angle-text-service-thumbnail.png',
+                        ontap: () {
+                          Get.to(PaymentListScreen());
+                        },
+                        img: 'assets/images/cashondelivery.png',
                         title: 'Total Paid Amount',
                         amount: '120,990'),
                   ],
@@ -186,6 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+//quantityControl
   Widget quantityControl(
       {required Function fct, required String text, required Color color}) {
     return Flexible(
@@ -234,20 +319,19 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(
                   height: 40,
-                  child: Image(
-                      image: CachedNetworkImageProvider(
+                  child: Image.asset(
                     img,
-                    maxHeight: 40,
-                    maxWidth: 40,
-                  )),
+                    height: 40,
+                    width: 40,
+                  ),
                 ),
                 const VerticalSpacing(6),
                 SizedBox(
                   height: 45,
                   child: Text(
                     title!.toString(),
-                    style: GoogleFonts.robotoCondensed(
-                      fontSize: 17,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
                     ),
                   ),
                 ),
@@ -256,7 +340,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     amount!.toString(),
                     style: GoogleFonts.robotoCondensed(
-                        fontSize: 24, fontWeight: FontWeight.w800),
+                        color: primaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800),
                   ),
                 ),
               ],
@@ -269,9 +355,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
 //total Button
   Widget totalButton(
-      {required String img, required String title, required String amount}) {
+      {required String img,
+      required String title,
+      required String amount,
+      required Function ontap}) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        ontap();
+      },
       child: Card(
         child: Container(
           decoration: BoxDecoration(
@@ -279,31 +370,33 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const VerticalSpacing(10),
               Padding(
                 padding: const EdgeInsets.all(6.0),
-                child: Image(
-                    image: CachedNetworkImageProvider(
+                child: Image.asset(
                   img,
-                  maxHeight: 50,
-                  maxWidth: 50,
-                )),
+                  height: 40,
+                  width: 40,
+                ),
               ),
               const VerticalSpacing(6),
               Padding(
                 padding: const EdgeInsets.all(7.0),
                 child: Text(
-                  title!.toString(),
-                  style: GoogleFonts.barlow(
-                    fontSize: 16,
+                  title.toString(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  amount!.toString(),
-                  style: GoogleFonts.robotoCondensed(
-                      fontSize: 25, fontWeight: FontWeight.bold),
+                  amount.toString(),
+                  style: GoogleFonts.roboto(
+                      color: primaryColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ],

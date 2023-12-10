@@ -1,6 +1,6 @@
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:st_curier_bd/src/model/services_model.dart';
+// import 'package:st_courier_bd/src/model/services_model.dart';
 
 // import '../component/colors/colors.dart';
 // import 'vertical_spacing.dart';

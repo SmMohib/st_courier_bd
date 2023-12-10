@@ -1,13 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:st_curier_bd/src/component/colors/colors.dart';
-import 'package:st_curier_bd/src/screens/home_screen.dart';
-import 'package:st_curier_bd/src/services/auth/loginScreen.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
+import 'package:st_courier_bd/src/component/colors/colors.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/add_parcel.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/coverage_area.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/delivery_list.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/parcel_track.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/payment_list.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/payment_request_list.dart';
+import 'package:st_courier_bd/src/screens/drawar_screens/pickup_parcel_list.dart';
+import 'package:st_courier_bd/src/screens/total_parcel.dart';
+import 'package:st_courier_bd/src/services/auth/loginScreen.dart';
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
 
 // ignore: use_key_in_widget_constructors
 class MainDrawer extends StatefulWidget {
@@ -22,7 +27,7 @@ class _MainDrawerState extends State<MainDrawer> {
     return Drawer(
       width: mediaQuery.width * .81,
       child: Padding(
-        padding: EdgeInsets.all(5.0),
+        padding: EdgeInsets.all(3.0),
         child: Column(
           children: [
             // ignore: sized_box_for_whitespace
@@ -31,10 +36,7 @@ class _MainDrawerState extends State<MainDrawer> {
               child: Container(
                 height: mediaQuery.height * 0.2,
                 width: mediaQuery.height * 0.2,
-                child: const Image(
-                    image: CachedNetworkImageProvider(
-                  'https://stcourier.stitbd.app/public/uploads/application/1692693950YRInjW3J1USkdT976599.jpg',
-                )),
+                child: Image.asset('assets/images/logo.png'),
               ),
             ),
 
@@ -44,65 +46,61 @@ class _MainDrawerState extends State<MainDrawer> {
                 physics: BouncingScrollPhysics(),
                 children: [
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(AddParcelScreen());
+                      },
                       text: 'Add Parcel',
-                      icon: const Icon(
-                        Icons.add_to_photos_rounded,
-                      )),
+                      icon: 'assets/images/add_parcel_drawer.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(TotalParcel());
+                      },
                       text: 'Parcel List',
-                      icon: const Icon(
-                        Icons.list_alt_sharp,
-                      )),
+                      icon: 'assets/images/total_parcel_d.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(ParcelTrackScreen());
+                      },
                       text: 'Order Traking',
-                      icon: const Icon(
-                        Icons.location_pin,
-                      )),
+                      icon: 'assets/images/track.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(CoverageAreaScreen());
+                      },
                       text: 'Coverage Area',
-                      icon: const Icon(
-                        Icons.public_rounded,
-                      )),
+                      icon: 'assets/images/coverage.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(PaymentRequestListScreen());
+                      },
                       text: 'Payment Request List',
-                      icon: const Icon(
-                        Icons.payment_outlined,
-                      )),
+                      icon: 'assets/images/payment.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(PaymentListScreen());
+                      },
                       text: 'Payment List',
-                      icon: const Icon(
-                        Icons.payments_sharp,
-                      )),
+                      icon: 'assets/images/payment.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(PickupParcelList());
+                      },
                       text: 'Pickup Parcel List',
-                      icon: const Icon(
-                        Icons.moped,
-                      )),
+                      icon: 'assets/images/pickup.png'),
                   list(
                       fct: () {},
                       text: 'Return Parcel List',
-                      icon: const Icon(
-                        Icons.reply_outlined,
-                      )),
+                      icon: 'assets/images/returnparcel1.png'),
                   list(
-                      fct: () {},
+                      fct: () {
+                        Get.to(DeliveryParcelList());
+                      },
                       text: 'Delivery List',
-                      icon: const Icon(
-                        Icons.local_shipping_rounded,
-                      )),
+                      icon: 'assets/images/total_parcel_d.png'),
                   list(
                       fct: () {},
                       text: 'Suport',
-                      icon: const Icon(
-                        Icons.spatial_audio_off_rounded,
-                      )),
+                      icon: 'assets/images/support.png'),
                   list(
                       fct: () {
                         Get.to(
@@ -110,9 +108,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         );
                       },
                       text: 'Log Out',
-                      icon: const Icon(
-                        Icons.logout,
-                      )),
+                      icon: 'assets/images/logout.png'),
                 ],
               ),
             ),
@@ -124,21 +120,27 @@ class _MainDrawerState extends State<MainDrawer> {
 
 ////List
   Widget list(
-      {required Function fct, required String text, required Icon icon}) {
-    return ListTile(
-      hoverColor: greyColor,
-      title: TextWidget(
-        text: text,
-        textSize: 16,
-        color: primaryColor,
-      ),
-      leading: Icon(
-        icon.icon,
-        color: primaryColor,
-      ),
-      onTap: () {
-        fct();
-      },
+      {required Function fct, required String text, required String icon}) {
+    return Column(
+      children: [
+        ListTile(
+          hoverColor: greyColor,
+          title: TextWidget(
+            text: text,
+            textSize: 16,
+            color: primaryColor,
+          ),
+          leading: Image.asset(
+            icon,
+            height: 25,
+            width: 25,
+          ),
+          onTap: () {
+            fct();
+          },
+        ),
+        Divider()
+      ],
     );
   }
 }

@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:st_curier_bd/src/component/colors/colors.dart';
-import 'package:st_curier_bd/src/services/auth/otp_screen.dart';
-import 'package:st_curier_bd/src/services/auth/registrationScreen.dart';
-import 'package:st_curier_bd/src/widgets/custom_button.dart';
-import 'package:st_curier_bd/src/widgets/text_widget.dart';
-import 'package:st_curier_bd/src/widgets/textfill_widget.dart';
-import 'package:st_curier_bd/src/widgets/vertical_spacing.dart';
+import 'package:st_courier_bd/src/component/colors/colors.dart';
+import 'package:st_courier_bd/src/services/auth/otp_screen.dart';
+import 'package:st_courier_bd/src/services/auth/registrationScreen.dart';
+import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
+import 'package:st_courier_bd/src/widgets/text_widget.dart';
+import 'package:st_courier_bd/src/widgets/textfill_widget.dart';
+import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 
 class ForgetScreen extends StatefulWidget {
   const ForgetScreen({super.key});
@@ -45,10 +45,7 @@ class _ForgetScreenState extends State<ForgetScreen> {
               Container(
                 height: mediaQuery.height * 0.3,
                 width: mediaQuery.height * 0.3,
-                child: const Image(
-                    image: CachedNetworkImageProvider(
-                  'https://stcourier.stitbd.app/public/uploads/application/1692693950YRInjW3J1USkdT976599.jpg',
-                )),
+                child: Image.asset('assets/images/logo.png'),
               ),
               TextWidget(
                 text: 'FORGET PASSWORD',
@@ -69,8 +66,8 @@ class _ForgetScreenState extends State<ForgetScreen> {
                           controller: _emailTextController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
-                            if (value!.isEmpty || !value.contains('')) {
-                              return 'Please enter a valid email address';
+                            if (value!.isEmpty || value.length < 11) {
+                              return 'Please enter a valid Phone Number';
                             } else {
                               return null;
                             }
