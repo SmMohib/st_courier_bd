@@ -1,16 +1,20 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:st_courier_bd/src/component/colors/colors.dart';
 import 'package:st_courier_bd/src/component/font/font_style.dart';
 import 'package:st_courier_bd/src/screens/home_screen.dart';
+import 'package:st_courier_bd/src/services/api/constant.dart';
 import 'package:st_courier_bd/src/services/auth/forget_password.dart';
 import 'package:st_courier_bd/src/services/auth/registrationScreen.dart';
 import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
 import 'package:st_courier_bd/src/widgets/text_widget.dart';
-import 'package:st_courier_bd/src/widgets/textfill_widget.dart';
 import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +25,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final _emailTextController = TextEditingController();
   final _passTextController = TextEditingController();
   final _passFocusNode = FocusNode();
@@ -32,6 +37,48 @@ class _LoginScreenState extends State<LoginScreen> {
     _passTextController.dispose();
     _passFocusNode.dispose();
     super.dispose();
+  }
+
+  Future<void> loginWithEmail() async {
+    var headers = {'Content-Type': 'application/json'};
+    try {
+      var url = Uri.parse(
+          ApiEndPoints.baseUrl + ApiEndPoints.authEndpoints.loginEmail);
+      Map body = {
+        'email': _emailTextController.text.trim(),
+        'password': _passTextController.text
+      };
+      http.Response response =
+          await http.post(url, body: jsonEncode(body), headers: headers);
+
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        if (json['code'] == 0) {
+          var token = json['data']['Token'];
+          final SharedPreferences? prefs = await _prefs;
+          await prefs?.setString('token', token);
+
+          _emailTextController.clear();
+          _passTextController.clear();
+          Get.off(HomeScreen());
+        } else if (json['code'] == 1) {
+          throw jsonDecode(response.body)['message'];
+        }
+      } else {
+        throw jsonDecode(response.body)["Message"] ?? "Unknown Error Occured";
+      }
+    } catch (error) {
+      Get.back();
+      showDialog(
+          context: Get.context!,
+          builder: (context) {
+            return SimpleDialog(
+              title: Text('Error'),
+              contentPadding: EdgeInsets.all(20),
+              children: [Text(error.toString())],
+            );
+          });
+    }
   }
 
   @override
@@ -154,8 +201,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     fct: () {
                       setState(() {
                         if (_formKey.currentState!.validate()) {
-                          //check if form data are valid,
-                          Get.to(HomeScreen());
+                          loginWithEmail().whenComplete(() => Get.to(HomeScreen()));
+
+              
                           // your process task ahed if all data are valid
                         }
                       });

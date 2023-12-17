@@ -50,6 +50,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
@@ -334,19 +336,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 }
 
+//  validator: (value) {
+//                         if (value!.isEmpty || value.length < 7) {
+//                           return 'Please enter a valid password';
+//                         } else {
+//                           return null;
+//                         }
+//                       },
 
-    //  validator: (value) {
-    //                         if (value!.isEmpty || value.length < 7) {
-    //                           return 'Please enter a valid password';
-    //                         } else {
-    //                           return null;
-    //                         }
-    //                       },
-
-    //  validator: (value) {
-    //                         if (value!.isEmpty || !value.contains('@')) {
-    //                           return 'Please enter a valid email address';
-    //                         } else {
-    //                           return null;
-    //                         }
-    //                       },
+//  validator: (value) {
+//                         if (value!.isEmpty || !value.contains('@')) {
+//                           return 'Please enter a valid email address';
+//                         } else {
+//                           return null;
+//                         }
+//                       },

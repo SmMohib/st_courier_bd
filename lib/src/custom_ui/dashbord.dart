@@ -15,20 +15,21 @@ import 'package:st_courier_bd/src/screens/return_complete.dart';
 import 'package:st_courier_bd/src/screens/return_parcel.dart';
 import 'package:st_courier_bd/src/screens/total_parcel.dart';
 import 'package:st_courier_bd/src/custom_ui/custom_button.dart';
+import 'package:st_courier_bd/src/widgets/cardTile.dart';
 import 'package:st_courier_bd/src/widgets/main_drawar.dart';
 import 'package:st_courier_bd/src/widgets/text_widget.dart';
 import 'package:st_courier_bd/src/widgets/vertical_spacing.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({
+class DashbordScreen extends StatefulWidget {
+  DashbordScreen({
     super.key,
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<DashbordScreen> createState() => _DashbordScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _DashbordScreenState extends State<DashbordScreen> {
   @override
   Widget build(BuildContext context) {
     // ignore: unused_local_variable
@@ -92,9 +93,29 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           title: TextWidget(text: 'Dashboard', textSize: 24),
           toolbarHeight: 60,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Material(
+                color: primaryColor,
+                borderRadius: BorderRadius.circular(12),
+                child: InkWell(
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage: AssetImage('assets/images/profilepic.png'),
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                  onTap: () {
+                    Get.to(ProfileScreen());
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
         drawer: MainDrawer(),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -102,43 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 //profile
                 Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const CircleAvatar(
-                          radius: 30,
-                          backgroundImage:
-                              AssetImage('assets/images/profilepic.png'),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            textPoppins(
-                                text: 'Mohibbullah',
-                                color: primaryColor,
-                                isTile: true,
-                                fontSize: 16),
-                            textPoppins(
-                                text: 'Balance: \৳150',
-                                color: blackColor,
-                                isTile: false,
-                                fontSize: 14),
-                            textPoppins(
-                                text: '0156896843',
-                                color: blackColor,
-                                isTile: false,
-                                fontSize: 14),
-                          ],
-                        ),
-                        CustomButton(
-                            fct: () {
-                              Get.to(ProfileScreen());
-                            },
-                            text: 'VIEW PROFILE',
-                            color: primaryColor)
-                      ],
-                    ),
-                    const VerticalSpacing(14),
                     Center(
                       child: textPoppins(
                           text: 'Welcome To ST Courier',
@@ -146,100 +130,173 @@ class _HomeScreenState extends State<HomeScreen> {
                           isTile: false,
                           fontSize: 19),
                     ),
+                    // CustomButton(
+                    //     fct: () {
+                    //       Get.to(AddParcelScreen());
+                    //     },
+                    //     text: 'ADD PARCEL',
+                    //     color: primaryColor),
+
                     const VerticalSpacing(10),
-                    CustomButton(
-                        fct: () {
-                          Get.to(AddParcelScreen());
-                        },
-                        text: 'ADD PARCEL',
-                        color: primaryColor),
-                    const VerticalSpacing(20),
-                  ],
-                ),
-                //services
-                Column(
-                  children: [
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        serviceButton(
-                            ontap: () {
-                              Get.to(TotalParcel(),
-                                  transition: Transition.circularReveal);
-                            },
-                            img: 'assets/images/totalpearcel.png',
-                            title: '  Total \n Parcel',
-                            amount: '35'),
-                        serviceButton(
-                            ontap: () {
-                              Get.to(CancelParcel(),
-                                  transition: Transition.circularReveal);
-                            },
-                            img: 'assets/images/cancelled.png',
-                            title: ' Cancel \n  Parcel',
-                            amount: '3'),
-                        serviceButton(
-                            ontap: () {
-                              Get.to(PendingPickupScreen());
-                            },
-                            img: 'assets/images/waitingpickup.png',
-                            title: 'Pending in\n   Pickup',
-                            amount: '34'),
+                        CardTile(
+                          onTap: () {},
+                          title: 'Total \nPatcel',
+                          img: 'assets/images/totalpearcel.png',
+                          iconBgColor: redColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {},
+                          img: 'assets/images/cancelled.png',
+                          title: 'Cancel \nParcel',
+                          iconBgColor: tabColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
                       ],
                     ),
+                    VerticalSpacing(10),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        serviceButton(
-                            ontap: () {
-                              Get.to(PendingDeliveryScreen());
-                            },
-                            img: 'assets/images/waitingdelivery.png',
-                            title: ' Panding \n Delivery',
-                            amount: '35'),
-                        serviceButton(
-                            ontap: () {},
-                            img: 'assets/images/deliverycomplete.png',
-                            title: '  Delivery \n Complete',
-                            amount: '34'),
-                        serviceButton(
-                            ontap: () {
-                              Get.to(PaymentCompleteScreen());
-                            },
-                            img: 'assets/images/paymentcomplete.png',
-                            title: ' Payment \nComplete',
-                            amount: '44'),
+                        CardTile(
+                          onTap: () {},
+                          img: 'assets/images/waitingpickup.png',
+                          title: 'Pending \nPickup',
+                          iconBgColor: chatBarMessage,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {},
+                          img: 'assets/images/cancelled.png',
+                          title: 'Cancel \nParcel',
+                          iconBgColor: buttonColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
                       ],
                     ),
+                    const VerticalSpacing(10),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        serviceButton(
-                            ontap: () {
-                              Get.to(ReturnParcelScreen());
-                            },
-                            img: 'assets/images/returnparcel.png',
-                            title: '  Return \n  Parcel',
-                            amount: '5'),
-                        serviceButton(
-                            ontap: () {
-                              Get.to(ReturnCompleteScreen());
-                            },
-                            img: 'assets/images/returncomplete.png',
-                            title: '  Return \nComplete',
-                            amount: '45'),
-                        serviceButton(
-                            ontap: () {},
-                            img: 'assets/images/pendingamout.png',
-                            title: ' Payment In\n Progress',
-                            amount: '35'),
+                        CardTile(
+                          onTap: () {
+                            Get.to(PendingPickupScreen());
+                          },
+                          img: 'assets/images/waitingpickup.png',
+                          title: 'Pending \nPickup',
+                          iconBgColor: blueColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {
+                            Get.to(PendingDeliveryScreen());
+                          },
+                          img: 'assets/images/waitingdelivery.png',
+                          title: 'Panding \nDelivery',
+                          iconBgColor: redColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
                       ],
-                    )
+                    ),
+                    const VerticalSpacing(10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CardTile(
+                          onTap: () {},
+                          img: 'assets/images/deliverycomplete.png',
+                          title: 'Delivery\nComplete',
+                          iconBgColor: pinkColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {
+                            Get.to(PaymentCompleteScreen());
+                          },
+                          img: 'assets/images/paymentcomplete.png',
+                          title: 'Payment \nComplete',
+                          iconBgColor: brownColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
+                      ],
+                    ),
+                    const VerticalSpacing(10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CardTile(
+                          onTap: () {
+                            Get.to(ReturnParcelScreen());
+                          },
+                          img: 'assets/images/returnparcel.png',
+                          title: 'Return \nParcel',
+                          iconBgColor: greenColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {
+                            Get.to(ReturnCompleteScreen());
+                          },
+                          img: 'assets/images/returncomplete.png',
+                          title: 'Return \nComplete',
+                          iconBgColor: redColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
+                      ],
+                    ),
+                    const VerticalSpacing(10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        CardTile(
+                          onTap: () {},
+                          img: 'assets/images/pendingamout.png',
+                          title: ' Payment In\n Progress',
+                          iconBgColor: redColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '54',
+                        ),
+                        CardTile(
+                          onTap: () {
+                            Get.to(PaymentCompleteScreen());
+                          },
+                          img: 'assets/images/paymentcomplete.png',
+                          title: 'Payment \nComplete',
+                          iconBgColor: greyColor,
+                          count: '30',
+                          subText: 'Today Total Parcel',
+                          parcent: '24',
+                        ),
+                      ],
+                    ),
+                    const VerticalSpacing(10),
                   ],
                 ),
+
                 const VerticalSpacing(10),
                 //total amount
                 Row(
@@ -248,14 +305,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     totalButton(
                         ontap: () {},
                         img: 'assets/images/totalamount1.png',
-                        title: 'Total Collect Amount',
+                        title: '           Total \nCollect Amount',
                         amount: '12,990'),
                     totalButton(
                         ontap: () {
                           Get.to(PaymentListScreen());
                         },
                         img: 'assets/images/cashondelivery.png',
-                        title: 'Total Paid Amount',
+                        title: '       Total \nPaid Amount',
                         amount: '120,990'),
                   ],
                 ),
@@ -315,13 +372,16 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 40,
-                  child: Image.asset(
-                    img,
                     height: 40,
-                    width: 40,
-                  ),
-                ),
+                    child: CircleAvatar(
+                      backgroundColor: primaryColor,
+                      radius: 50,
+                      child: Image.asset(
+                        img,
+                        height: 30,
+                        width: 30,
+                      ),
+                    )),
                 const VerticalSpacing(6),
                 SizedBox(
                   height: 45,
@@ -362,6 +422,8 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Card(
         child: Container(
+          height: 180,
+          width: 150,
           decoration: BoxDecoration(
               color: whiteColor, borderRadius: BorderRadius.circular(14)),
           child: Column(
@@ -369,13 +431,16 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const VerticalSpacing(10),
               Padding(
-                padding: const EdgeInsets.all(6.0),
-                child: Image.asset(
-                  img,
-                  height: 40,
-                  width: 40,
-                ),
-              ),
+                  padding: const EdgeInsets.all(6.0),
+                  child: CircleAvatar(
+                    backgroundColor: appBarColor,
+                    radius: 25,
+                    child: Image.asset(
+                      img,
+                      height: 26,
+                      width: 26,
+                    ),
+                  )),
               const VerticalSpacing(6),
               Padding(
                 padding: const EdgeInsets.all(7.0),

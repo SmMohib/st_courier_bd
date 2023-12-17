@@ -5,9 +5,12 @@ import '../component/font/font_style.dart';
 
 // ignore: must_be_immutable
 class CustomButton extends StatelessWidget {
-  CustomButton(
-      {Key? key, required this.fct, required this.text, required this.color,})
-      : super(key: key);
+  CustomButton({
+    Key? key,
+    required this.fct,
+    required this.text,
+    required this.color,
+  }) : super(key: key);
   final String text;
   final Function fct;
   Color color;
@@ -25,8 +28,8 @@ class CustomButton extends StatelessWidget {
               fct();
             },
             child: Padding(
-              padding:
-                  const EdgeInsets.only(left: 18, right: 18, top: 5, bottom: 6),
+              padding: const EdgeInsets.only(
+                  left: 18, right: 18, top: 10, bottom: 10),
               child: Center(
                 child: textPoppins(
                     text: text, color: whiteColor, isTile: false, fontSize: 14),

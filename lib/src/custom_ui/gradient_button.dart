@@ -26,12 +26,8 @@ class GradientButton extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 250.0, minHeight: 50.0),
             alignment: Alignment.center,
             child: textPoppins(
-                text: text,
-                color: whiteColor,
-                isTile: false,
-                fontSize: 20)),
+                text: text, color: whiteColor, isTile: false, fontSize: 20)),
       ),
     );
   }
-
 }

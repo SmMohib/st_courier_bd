@@ -47,15 +47,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const VerticalSpacing(16),
                   textPoppins(
-                      text: 'Mohib Bullah',
+                      text: 'Mohibbullah',
                       color: whiteColor,
-                      isTile: false,
-                      fontSize: 20),
-                  textPoppins(
-                      text: '0174789900',
-                      color: whiteColor,
-                      isTile: false,
+                      isTile: true,
                       fontSize: 16),
+                  textPoppins(
+                      text: 'Balance: \৳150',
+                      color: whiteColor,
+                      isTile: false,
+                      fontSize: 14),
+                  textPoppins(
+                      text: '0156896843',
+                      color: whiteColor,
+                      isTile: false,
+                      fontSize: 14),
                   const VerticalSpacing(25)
                 ],
               ),

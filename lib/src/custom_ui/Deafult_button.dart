@@ -43,10 +43,7 @@ class DeafultButton extends StatelessWidget {
           height: 50,
           child: Center(
             child: textPoppins(
-                text: text,
-                color: primaryColor,
-                isTile: false,
-                fontSize: 16),
+                text: text, color: primaryColor, isTile: false, fontSize: 16),
           ),
         ),
       ),

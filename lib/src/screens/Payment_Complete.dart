@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:st_courier_bd/src/component/colors/colors.dart';
 import 'package:st_courier_bd/src/component/font/font_style.dart';
-import 'package:st_courier_bd/src/custom_ui/gradient_button.dart';
 
 import '../custom_ui/card_ui.dart';
-import '../widgets/vertical_spacing.dart';
 
 class PaymentCompleteScreen extends StatefulWidget {
   const PaymentCompleteScreen({super.key});

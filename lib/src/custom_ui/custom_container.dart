@@ -32,7 +32,6 @@ class CustomContainer extends StatelessWidget {
   }
 }
 
-
 //  decoration: BoxDecoration(
 //                   color: whiteColor,
 //                   border: Border.all(
