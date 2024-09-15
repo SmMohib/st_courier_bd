@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             child: const Text("Yes"),
                             style:
-                                ElevatedButton.styleFrom(primary: primaryColor),
+                                ElevatedButton.styleFrom(backgroundColor: primaryColor),
                           ),
                         ),
                         const SizedBox(width: 15),
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child:
                               Text("No", style: TextStyle(color: Colors.black)),
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            backgroundColor: Colors.white,
                           ),
                         ))
                       ],
